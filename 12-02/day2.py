@@ -39,14 +39,15 @@ def part2(fp: Path) -> int:
     safe_count = 0
     grid = parsedata(fp)
     for row in grid:
-        row_options = []
+        if is_safe(row):
+            safe_count += 1
+            continue
         for i in range(len(row)):
             copy = row.copy()
             copy.pop(i)
-            row_options.append(copy)
-        row_options.append(row)
-        if any([is_safe(r) for r in row_options]):
-            safe_count += 1
+            if is_safe(copy):
+                safe_count += 1
+                break
     return safe_count
 
 
